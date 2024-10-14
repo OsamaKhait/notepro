@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\PreviousPasswords;
+use App\Entity\Professor;
 use App\Entity\Student;
+use App\Entity\User;
 use App\Form\StudentType;
 use App\Repository\StudentRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -102,6 +104,8 @@ class StudentController extends AbstractController
         return $this->redirectToRoute('app_student_index', [], Response::HTTP_SEE_OTHER);
     }
 
+
+
     #[Route('/{id}/notes', name: 'app_student_notes', methods: ['GET', 'POST'])]
     public function notes(Student $student, EntityManagerInterface $entityManager): Response
     {
@@ -110,6 +114,15 @@ class StudentController extends AbstractController
             'student' => $student,
             'grades' => $student->getGrades()
 
+        ]);
+    }
+
+    #[Route('/{id}/profs', name: 'app_student_profs', methods: ['GET', 'POST'])]
+    public function profs(Professor $professor, EntityManagerInterface $entityManager): Response
+    {
+
+        return $this->render('student/prof_show.html.twig', [
+            'professor' => $professor,
         ]);
     }
 }
